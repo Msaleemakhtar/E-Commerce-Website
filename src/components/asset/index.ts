@@ -1,0 +1,1 @@
+export {default as grlimage} from "@/images/grlimage.webp"
