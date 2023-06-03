@@ -89,8 +89,8 @@ The development of this project can be continued by adding a search filter funct
 
 ## Author
 
-- Github - [Shabrina Putri](https://github.com/shabrina12/)
-- Instagram - [@shabputri_](https://www.instagram.com/shabputri_/)
+- Github - [Shabrina Putri](https://github.com/Msalaeemakhtar/)
+
 
 
 ## Acknowledgments
