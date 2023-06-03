@@ -16,7 +16,7 @@ let client:SanityClient = createClient({
     
 try {
     const response = await client.fetch(`*[_type == 'products']`);
-    console.log(response)
+   
     return NextResponse.json({response}) 
 } catch (error) {
     console.log((error as {message: string}).message);

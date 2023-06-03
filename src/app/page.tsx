@@ -9,7 +9,7 @@ async function getData (){
   const res = await fetch(`${BASE_PATH_FORAPI}/api/products`);
 
   if(!res.ok){
-    throw new Error("failed to fetch data")
+    throw new Error("failed to fetch data");
   }
   return res.json();
 
@@ -20,7 +20,8 @@ async function getData (){
 
 
 export default async function Home() {
-  const{response}= await getData ();
+  const result  = await getData ();
+  console.log (result)
   return (
     <main>
   <Hero/>
