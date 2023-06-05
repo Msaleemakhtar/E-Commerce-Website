@@ -21,7 +21,7 @@ async function getData (){
 
 export default async function Home() {
   const result  = await getData ();
-  console.log (result)
+ 
   return (
     <main>
   <Hero/>

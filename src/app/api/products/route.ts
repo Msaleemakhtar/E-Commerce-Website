@@ -6,7 +6,7 @@ import {SanityClient} from "sanity"
 let client:SanityClient = createClient({
     projectId: `${ process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}`,
     dataset: `${ process.env.NEXT_PUBLIC_SANITY_DATASET}`,
-    apiVersion: "2023-05-28",
+    apiVersion: "2023-06-05",
     useCdn: false
   });
   
