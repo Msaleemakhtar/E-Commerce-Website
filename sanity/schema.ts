@@ -3,3 +3,6 @@ import Products from './Products'
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [ Products],
 }
+
+
+
