@@ -1,10 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
-
+import {GrFacebookOption, GrTwitter, GrLinkedinOption} from 'react-icons/gr'
 const Footer = () => {
   return (
     <footer className="text-gray-500 body-font">
-        <div className = " container flex flex-col flex-wrap mx-auto text-start px-5 py-10 md:flex-nowrap md:flex-row md:items-start">
+        <div className = " cursor-pointer container flex flex-col flex-wrap mx-auto text-start px-5 py-10 md:flex-nowrap md:flex-row md:items-start">
 
            {/* ***image**** */}
         <div className="w-64 space-y-3 flex-shrink-0 mx-auto text-start md:mx-0 md:text-left">
@@ -65,8 +65,27 @@ const Footer = () => {
 
          {/* ***bottom part**** */}
         
-        <div></div>
-        
+        <div className="bg-gray-100 ">
+
+            <div className = "container mx-auto flex justify-between items-center  px-5 py-4 flex-wrap md:flex-nowrap ">
+
+            <p className = "text-gray-600 hover:text-gray-800" >© 2023  —
+                <a href="https://github.com/Msaleemakhtar" target = "_blank" >Msaleemakhtar</a>
+            </p>
+
+            <span className = " inline-flex  gap-4">
+
+                <a><GrTwitter size={20} /></a>
+                <a><GrFacebookOption size={20} /></a>
+                <a><GrLinkedinOption size={20} /></a>
+            </span>
+
+            
+
+
+
+        </div>
+        </div>
         
         
         </footer>
