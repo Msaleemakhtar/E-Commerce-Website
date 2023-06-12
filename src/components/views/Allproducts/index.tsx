@@ -6,12 +6,12 @@ import { Component } from "react";
 import CardAll from "../CardsAll";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-interface PropsData {
+interface PropsType {
   sliceData: Array<oneProductType>;
 }
 
 export default class AllproductsData extends Component<{
-  ProductData: PropsData;
+  ProductData: PropsType;
 }> {
   start: number = 10;
   end: number = 20;
@@ -24,7 +24,7 @@ export default class AllproductsData extends Component<{
       `${BASE_PATH_FORAPI}/api/products?start=${start}&end=${end}`
     );
 
-    const dataToCheck = await res.json();
+   let dataToCheck = await res.json();
 
     if (dataToCheck.sliceData === "Not Found") {
       this.setState({
@@ -34,8 +34,10 @@ export default class AllproductsData extends Component<{
     return dataToCheck;
   };
 
-  getData = async () => {
-    const Alldata = await this.api_data(this.start, this.end);
+  
+
+   getData = async () => {
+   let Alldata = await this.api_data(this.start, this.end);
     if (Alldata.sliceData !== "Not Found") {
       this.setState({
         items: this.state.items.concat(Alldata.sliceData),
@@ -49,8 +51,10 @@ export default class AllproductsData extends Component<{
     this.start = this.start + 10;
     this.end = this.end + 10;
   };
+  
   render() {
     return (
+    
       <InfiniteScroll
         dataLength={this.state.items.length}
         next={this.getData}
@@ -67,6 +71,7 @@ export default class AllproductsData extends Component<{
           <CardAll key={index} singleProductData={item} />
         ))}
       </InfiniteScroll>
-    );
+
+    )
   }
 }

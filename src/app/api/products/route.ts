@@ -15,9 +15,9 @@ import { NextRequest, NextResponse } from "next/server";
     const url = request.nextUrl.searchParams;
   
     
-    const res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-05/data/query/production?query=*[_type == "products"]`)
+    let res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-05/data/query/production?query=*[_type == "products"]`)
 
-    const api_data = await res.json() 
+    let api_data = await res.json() 
     
     originalData.push(...api_data.result) 
   
@@ -26,7 +26,7 @@ import { NextRequest, NextResponse } from "next/server";
 
         if(originalData[Number( url.get( "start"))]){
           
-      const sliceData =  originalData.slice(Number( url.get( "start")), Number( url.get("end")))
+     let sliceData =  originalData.slice(Number( url.get( "start")), Number( url.get("end")))
       return NextResponse.json({sliceData}) 
         } 
         return NextResponse.json({sliceData: "No data found"}) 
