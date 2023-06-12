@@ -1,83 +1,61 @@
-"use client";
-
+"use client"
 import BASE_PATH_FORAPI from "@/components/shared/BasePath";
-import { oneProductType } from "@/components/utils/ProductDataTypes";
-import { Component } from "react";
-import CardAll from "../CardsAll";
+import { oneProductType } from "@/components/utils/ProductDataTypes"
+import { Component } from "react"
 import InfiniteScroll from "react-infinite-scroll-component";
+import CardAll from "../CardsAll";
 
-interface PropsType {
-  sliceData: Array<oneProductType>;
+interface propsType {
+  sliceData: Array<oneProductType>
 }
 
-export default class AllproductsData extends Component<{ProductData: PropsType;}> {
-
- 
-  
-  start: number = 5;
-  end: number = 10;
-  state: { items: Array<oneProductType>; hasMore: boolean } = {
-    items: [...this.props.ProductData.sliceData],
-    hasMore: true,
-  };
-  api_data = async (start: number, end: number) => {
-    const res = await fetch(
-      `${BASE_PATH_FORAPI}/api/products?start=${start}&end=${end}`
-    );
-
-   let dataToCheck = await res.json();
-   
-    if (dataToCheck.sliceData === "Not Found") {
-      this.setState({
-        hasMore: false,
-      });
+export default class AllProductsCompo extends Component<{ ProdutcData: propsType }> {
+    start: number = 10;
+    end: number = 20;
+    state: { items: Array<oneProductType>, hasMore: boolean } = {
+        items: [...this.props.ProdutcData.sliceData],
+        hasMore: true,
     }
-    return dataToCheck;
-  };
-
-  
-
-   getData = async () => {
-   let Alldata = await this.api_data(this.start, this.end);
-  
-    if (Alldata.sliceData !== "Not Found") {
-     
-      this.setState({
-        items: this.state.items.concat(Alldata.sliceData),
-      });
-    } 
-    else {
-      this.setState({
-        hasMore: false,
-      });
-    }
-
-    this.start = this.start + 5;
-    this.end = this.end + 5;
-  }; 
- 
-  
-  render() {
-    return (
-    
-     
-      <InfiniteScroll
-        dataLength={this.state.items.length}
-        next={this.getData}
-        hasMore={this.state.hasMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
+    fetchDataFromApiGradually = async (start: number, end: number) => {
+        const res = await fetch(`${BASE_PATH_FORAPI}/api/products?start=${start}&end=${end}`);
+        const dataToCheckAndSend = await res.json();
+        if (dataToCheckAndSend.sliceData === "Not found") {
+            this.setState({ hasMore: false })
         }
-        className="content-center justify-center grid grid-cols-1 md:grid-cols-3 lg:grid-col-4 py-10  gap-4"
-      >
-        {this.state.items.map((item: oneProductType, index: number) => (
-          <CardAll key={index} singleProductData={item}/>
-        ))}
-      </InfiniteScroll>
-
-    )
-  }
+        return dataToCheckAndSend;
+    }
+    getData = async () => {
+        let allTogether = await this.fetchDataFromApiGradually(this.start, this.end);
+        if (allTogether.sliceData !== "Not found") {
+            this.setState({
+                items: this.state.items.concat(allTogether.sliceData)
+            })
+        } else {
+            this.setState({
+                hasMore: false
+            })
+        }
+        this.start = this.start + 10;
+        this.end = this.end + 10;
+    }
+    render() {
+        return (
+            <InfiniteScroll
+                dataLength={this.state.items.length}
+                next={this.getData}
+                hasMore={this.state.hasMore}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                    </p>
+                }
+                className="content-center justify-center grid grid-cols-2 md:grid-cols-3 py-10 lg:grid-cols-4 gap-4"
+            >
+                {this.state.items.map((item: oneProductType, index: number) => (
+                    <CardAll key={index} singleProductData={item} />
+                ))}
+            </InfiniteScroll>
+        )
+    };
 }
