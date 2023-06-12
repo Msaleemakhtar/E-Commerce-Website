@@ -14,6 +14,12 @@ const nextConfig = {
                 port: "",
                 pathname: "/**",
             },
+             {
+                protocol: "https",
+                hostname: "commerce-git-main-saleemakhtar864-gmailcom.vercel.app",
+                port: "",
+                pathname: "/**",
+            },
         ],
     },
 }
