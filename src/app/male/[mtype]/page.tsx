@@ -2,7 +2,7 @@ import {responseType, oneProductType} from "@/components/utils/ProductDataTypes"
 import CardAll from "@/components/views/CardsAll"
 
 async function getData (){
-    const res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-05/data/query/production?query=*%5B_type%20%3D%3D%20%22products%22%20%26%26%20productTypes%5B0%5D%20%3D%3D%20%22Male%22%5D`, {
+    const res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-05/data/query/production?query=*%5B_type%20%3D%3D%20%22products%22%20%26%26%20productTypes%5B0%5D%20%3D%3D%20%22male%22%5D`, {
       next:{
         revalidate: 60
       }
@@ -18,7 +18,7 @@ async function getData (){
 
   const Male = async ({params}:{params:{mtype:string}})=>{
 let res:responseType = await getData();
-if(params.mtype !== "Male"){
+if(params.mtype !== "male"){
   let originalData = res.result.filter((items)=>items.productTypes[1]=== params.mtype)
   res= {result : originalData}
 }

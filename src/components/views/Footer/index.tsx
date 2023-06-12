@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import {GrFacebookOption, GrTwitter, GrLinkedinOption} from 'react-icons/gr'
+
 const Footer = () => {
   return (
     <footer className="text-gray-500 body-font">
@@ -10,7 +11,7 @@ const Footer = () => {
         <div className="w-64 space-y-3 flex-shrink-0 mx-auto text-start md:mx-0 md:text-left">
             <Link href = {"/"}> 
             
-            <Image src={"/logo.webp"} width={150} height={150} alt= "logo"/>
+            <Image src= "/logo.webp" width={150} height={150} alt= "logo"/>
              </Link>
 
              <p >Small, artisan label that offers a thoughtfully curated collection of high quality everyday essentials made</p>

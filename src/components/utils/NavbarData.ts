@@ -10,7 +10,7 @@ export interface NavbarItems {
 export const NavbarArray : Array<NavbarItems> = [
     {
         label: "Female",
-        href: "/female/Female",
+        href: "/female/female",
         isDropDown: true,
         dropDownData: [
             {
@@ -37,7 +37,7 @@ export const NavbarArray : Array<NavbarItems> = [
     },
     {
         label: "Male",
-        href: "/male/Male",
+        href: "/male/male",
         isDropDown: true,
         dropDownData : [
             {
