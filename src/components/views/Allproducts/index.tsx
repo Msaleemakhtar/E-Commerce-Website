@@ -10,11 +10,12 @@ interface PropsType {
   sliceData: Array<oneProductType>;
 }
 
-export default class AllproductsData extends Component<{
-  ProductData: PropsType;
-}> {
-  start: number = 10;
-  end: number = 20;
+export default class AllproductsData extends Component<{ProductData: PropsType;}> {
+
+ 
+  
+  start: number = 5;
+  end: number = 10;
   state: { items: Array<oneProductType>; hasMore: boolean } = {
     items: [...this.props.ProductData.sliceData],
     hasMore: true,
@@ -25,7 +26,7 @@ export default class AllproductsData extends Component<{
     );
 
    let dataToCheck = await res.json();
-
+   console.log("saleem",  dataToCheck )
     if (dataToCheck.sliceData === "Not Found") {
       this.setState({
         hasMore: false,
@@ -38,7 +39,9 @@ export default class AllproductsData extends Component<{
 
    getData = async () => {
    let Alldata = await this.api_data(this.start, this.end);
+  
     if (Alldata.sliceData !== "Not Found") {
+     
       this.setState({
         items: this.state.items.concat(Alldata.sliceData),
       });
@@ -48,13 +51,15 @@ export default class AllproductsData extends Component<{
       });
     }
 
-    this.start = this.start + 10;
-    this.end = this.end + 10;
-  };
+    this.start = this.start + 5;
+    this.end = this.end + 5;
+  }; 
+ 
   
   render() {
     return (
     
+     
       <InfiniteScroll
         dataLength={this.state.items.length}
         next={this.getData}
