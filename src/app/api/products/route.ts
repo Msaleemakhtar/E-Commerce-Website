@@ -1,28 +1,38 @@
-import { createClient } from 'next-sanity';
-import { NextResponse } from "next/server";
-import {SanityClient} from "sanity"
 
 
-let client:SanityClient = createClient({
-    projectId: `${ process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}`,
-    dataset: `${ process.env.NEXT_PUBLIC_SANITY_DATASET}`,
-    apiVersion: "2023-06-05",
-    useCdn: false
-  });
+
+import { oneProductType } from "@/components/utils/ProductDataTypes";
+import { NextRequest, NextResponse } from "next/server";
+
+
+
   
 
   
- export async function GET() {
+ export async function GET(request:NextRequest) {
+   const originalData:Array<oneProductType> = []
+  
+    const url = request.nextUrl.searchParams;
+  
     
-try {
-    const response = await client.fetch(`*[_type == 'products']`);
-   
-    return NextResponse.json({response}) 
-} catch (error) {
-    console.log((error as {message: string}).message);
-    return NextResponse.json({"Error}": error})
+    const res = await fetch(`https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-05/data/query/production?query=*[_type == "products"]`)
+
+    const api_data = await res.json() 
     
-}
+    originalData.push(...api_data.result) 
+  
+
+    if(url.has("start") || url.has("end") ) {
+
+        if(originalData[Number( url.get( "start"))]){
+          
+      const sliceData =  originalData.slice(Number( url.get( "start")), Number( url.get("end")))
+      return NextResponse.json({sliceData}) 
+        } 
+        return NextResponse.json({sliceData: "No data found"}) 
+      
+    }
+    return NextResponse.json({originalData}) 
 
   };
   
