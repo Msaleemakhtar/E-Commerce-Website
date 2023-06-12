@@ -6,29 +6,29 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import CardAll from "../CardsAll";
 
 interface propsType {
-  sliceData: Array<oneProductType>
+    productArray: Array<oneProductType>
 }
 
 export default class AllProductsCompo extends Component<{ ProdutcData: propsType }> {
     start: number = 10;
     end: number = 20;
     state: { items: Array<oneProductType>, hasMore: boolean } = {
-        items: [...this.props.ProdutcData.sliceData],
+        items: [...this.props.ProdutcData.productArray],
         hasMore: true,
     }
     fetchDataFromApiGradually = async (start: number, end: number) => {
         const res = await fetch(`${BASE_PATH_FORAPI}/api/products?start=${start}&end=${end}`);
         const dataToCheckAndSend = await res.json();
-        if (dataToCheckAndSend.sliceData === "Not found") {
+        if (dataToCheckAndSend.productArray === "Not found") {
             this.setState({ hasMore: false })
         }
         return dataToCheckAndSend;
     }
     getData = async () => {
         let allTogether = await this.fetchDataFromApiGradually(this.start, this.end);
-        if (allTogether.sliceData !== "Not found") {
+        if (allTogether.productArray !== "Not found") {
             this.setState({
-                items: this.state.items.concat(allTogether.sliceData)
+                items: this.state.items.concat(allTogether.productArray)
             })
         } else {
             this.setState({

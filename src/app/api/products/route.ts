@@ -13,10 +13,10 @@
   
       if (url.has("start") || url.has("end")) {
           if (orignalData[Number(url.get("start"))]) {
-              let sliceData = orignalData.slice(Number(url.get("start")), Number(url.get("end")))
-              return NextResponse.json({sliceData })
+              let productArray = orignalData.slice(Number(url.get("start")), Number(url.get("end")))
+              return NextResponse.json({ productArray })
           }
-          return NextResponse.json({ sliceData: "Not found" })
+          return NextResponse.json({ productArray: "Not found" })
   
       }
   
