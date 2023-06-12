@@ -38,7 +38,7 @@ export default class AllproductsData extends Component<{
     const Alldata = await this.api_data(this.start, this.end);
     if (Alldata.sliceData !== "Not Found") {
       this.setState({
-        items: this.state.items.concat(Alldata.productArray),
+        items: this.state.items.concat(Alldata.sliceData),
       });
     } else {
       this.setState({
