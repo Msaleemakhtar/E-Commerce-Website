@@ -26,7 +26,7 @@ export default class AllproductsData extends Component<{ProductData: PropsType;}
     );
 
    let dataToCheck = await res.json();
-   console.log("saleem",  dataToCheck )
+   
     if (dataToCheck.sliceData === "Not Found") {
       this.setState({
         hasMore: false,
@@ -45,7 +45,8 @@ export default class AllproductsData extends Component<{ProductData: PropsType;}
       this.setState({
         items: this.state.items.concat(Alldata.sliceData),
       });
-    } else {
+    } 
+    else {
       this.setState({
         hasMore: false,
       });
@@ -73,7 +74,7 @@ export default class AllproductsData extends Component<{ProductData: PropsType;}
         className="content-center justify-center grid grid-cols-1 md:grid-cols-3 lg:grid-col-4 py-10  gap-4"
       >
         {this.state.items.map((item: oneProductType, index: number) => (
-          <CardAll key={index} singleProductData={item} />
+          <CardAll key={index} singleProductData={item}/>
         ))}
       </InfiniteScroll>
 
