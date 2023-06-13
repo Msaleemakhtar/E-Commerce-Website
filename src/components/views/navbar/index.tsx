@@ -10,10 +10,26 @@ import Link from "next/link";
 import { useState } from "react";
 import DropDown from "./subNavBar/DropDown";
 import Expand from "./subNavBar/Expand";
+import { useRouter } from "next/navigation";
+
 
 const Navbar = () => {
+  const Router = useRouter()
   const [isNavbarOpen, setNavbarOpen] = useState<boolean>(false);
   const [cartItemNumber, setcartNumber] = useState<number>(0);
+  const[searchQuery, setSearchQuery]= useState ("") 
+
+
+  const searchHandle = (e) => {
+    if (e.key === 'Enter' && e.keyCode === 13 && searchQuery.trim() !== '') {
+      router.push(`/search/${searchQuery}`);
+    }
+  };
+
+
+
+
+
   return (
     <div className="sticky tp-0 z-50 bg-white">
       <div className=" py-5 flex items-center justify-between space-x-12">
@@ -54,15 +70,30 @@ const Navbar = () => {
 
           {/* *****Search Bar*** */}
 
+
+          
+
           <div className="flex items-center border px-3 rounded-md ">
-            <BiSearch />
+          {searchQuery.trim() !== '' ? (
+        <Link href={`/search/${searchQuery}`}>
+          <BiSearch />
+        </Link>
+      ) : (
+        <div>
+          <BiSearch style={{ color: 'gray', cursor: 'not-allowed' }} />
+        </div>
+      )}
             <input
+            value={searchQuery}
+            onKeyDown={searchHandle}
+            onChange={(e)=>setSearchQuery(e.target.value)}
               type="text"
               placeholder="Search Your Product "
               className=" pl-1 pr-5  py-1 w-80"
+            
             />
           </div>
-
+          
           {/* *****Cart*** */}
 
           <div className="flex-shrink-0 relative w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center">
