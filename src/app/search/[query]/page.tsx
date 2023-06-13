@@ -1,5 +1,5 @@
 
-import {oneProductType} from "@/components/utils/ProductDataTyoes"
+import {oneProductType} from "@/components/utils/ProductDataTypes"
 import {client} from "../../../../sanity/lib/client"
 import CardAll from "@/components/views/CardsAll";
 
