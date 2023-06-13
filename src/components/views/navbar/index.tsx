@@ -20,9 +20,9 @@ const Navbar = () => {
   const[searchQuery, setSearchQuery]= useState ("") 
 
 
-  const searchHandle = (e) => {
+  const searchHandle = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.keyCode === 13 && searchQuery.trim() !== '') {
-      router.push(`/search/${searchQuery}`);
+      Router.push(`/search/${searchQuery}`);
     }
   };
 
