@@ -21,7 +21,7 @@ const ProductDetail:FC<{item:oneProductType}> = ({item}) => {
               <div>
                 {
                 item.image.map((subItems:imagesType, index:number)=>(
-                    <div className="w-24">
+                    <div key={index} className="w-24">
                            <Image width={1000} height={1000} alt={subItems.alt} src={urlFor(subItems).width(1000).height(1000).url()} />
                     </div>
                 )) 
