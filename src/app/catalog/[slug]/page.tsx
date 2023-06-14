@@ -3,7 +3,7 @@ import {
   oneProductType,
   responseType,
 } from "@/components/utils/ProductDataTypes";
-import ProductDetail from "@/components/views/ProductDetail";
+import ProductDetail from "@/components/views/ProductDetail"
 
 // Metadata generator
 export async function generateMetadata({
@@ -31,7 +31,7 @@ export async function generateMetadata({
 
 async function ProductData(slug: string) {
   const res = await fetch(
-    `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2023-06-05/data/query/production?query=*%5B_type%20%3D%3D%20%22products%22%20%26%26%20slug.current%3D%3D%22{slug}%22%5D`
+   `https://cv77cftg.api.sanity.io/v2023-06-05/data/query/production?query=*%5B_type%20%3D%3D%20%22products%22%20%26%26%20slug.current%3D%3D%22${slug}%22%5D`
   );
 
   return res.json();
@@ -39,7 +39,12 @@ async function ProductData(slug: string) {
 
 const Catalog = async ({ params }: { params: { slug: string } }) => {
   let data: responseType = await ProductData(params.slug);
-  return <ProductDetail data={data.result[0]} />;
+ 
+  return (
+    <div>
+  <ProductDetail item={data.result[0]} />
+ </div>
+  )
 };
 
 export default Catalog;
