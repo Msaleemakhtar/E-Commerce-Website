@@ -1,5 +1,5 @@
 "use client";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import {
   oneProductType,
   imagesType,
@@ -9,6 +9,9 @@ import { client } from "../../../../sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { useState } from "react";
 import { BsCart2 } from "react-icons/bs";
+import { cartContext } from "@/global/context";
+
+
 
 const builder = imageUrlBuilder(client);
 
@@ -17,6 +20,7 @@ function urlFor(source: any) {
 }
 
 const ProductDetail: FC<{ item: oneProductType }> = ({ item }) => {
+let {dispatch} =  useContext(cartContext)
   const [previewImage, setPreviewImage] = useState<string>(item.image[0]._key);
   const [Quantity, setQuantity] = useState(1);
 
@@ -29,6 +33,28 @@ const ProductDetail: FC<{ item: oneProductType }> = ({ item }) => {
       setQuantity(Quantity - 1);
     }
   };
+
+
+function cartHandle(){
+
+  dispatch({
+    payload:"addToCart",
+    data:{
+      productId: item._id,
+      quantity:Quantity,
+    }
+  })
+
+}
+
+
+
+
+
+
+
+
+
 
   return (
     <div>
@@ -119,8 +145,8 @@ const ProductDetail: FC<{ item: oneProductType }> = ({ item }) => {
 
           {/* add to cart */}
 
-          <div className=" flex items-center gap-4">
-            <button className="flex items-center bg-gray-900 rounded-sm px-3 py-3 text-white ">
+          <div  className=" flex items-center gap-4">
+            <button onClick  = {()=>cartHandle()} className="flex items-center bg-gray-900 rounded-sm px-3 py-3 text-white ">
               <BsCart2 size={23} />
               &nbsp; &nbsp; Add To Cart
             </button>

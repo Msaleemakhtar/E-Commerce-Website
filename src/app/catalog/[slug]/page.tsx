@@ -4,6 +4,7 @@ import {
   responseType,
 } from "@/components/utils/ProductDataTypes";
 import ProductDetail from "@/components/views/ProductDetail"
+import ContextWrapper from "@/global/context";
 
 // Metadata generator
 export async function generateMetadata({
@@ -41,9 +42,9 @@ const Catalog = async ({ params }: { params: { slug: string } }) => {
   let data: responseType = await ProductData(params.slug);
  
   return (
-    <div>
+   <ContextWrapper>
   <ProductDetail item={data.result[0]} />
- </div>
+</ContextWrapper>
   )
 };
 
