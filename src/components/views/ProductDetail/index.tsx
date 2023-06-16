@@ -1,4 +1,7 @@
 "use client";
+
+
+import toast, { Toaster } from 'react-hot-toast';
 import { FC, useContext } from "react";
 import {
   oneProductType,
@@ -18,6 +21,9 @@ const builder = imageUrlBuilder(client);
 function urlFor(source: any) {
   return builder.image(source);
 }
+
+
+
 
 const ProductDetail: FC<{ item: oneProductType }> = ({ item }) => {
 let {dispatch} =  useContext(cartContext)
@@ -44,9 +50,15 @@ function cartHandle(){
       quantity:Quantity,
     }
   })
-
+  notification(item.productName)
 }
+const notification = (title:string) => toast.success(`${Quantity}${title} added to Cart`,{
 
+  duration: 4000,
+  position: 'top-center',
+  className: 'border-2 border-indigo-200 border-t-indigo-500',
+
+});
 
 
 
@@ -58,6 +70,7 @@ function cartHandle(){
 
   return (
     <div>
+      <Toaster/>
       <div className=" flex flex-col lg:flex-row items-center justify-center gap-6 py-7">
         {/* imges */}
         <div className="flex gap-4 md:gap-8">

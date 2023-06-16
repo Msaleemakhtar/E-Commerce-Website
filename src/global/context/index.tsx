@@ -8,10 +8,7 @@ export const cartContext = createContext<any>(null);
 const ContextWrapper = ({ children }: { children: ReactNode }) => {
   const initialValue = {
     cart: [
-      {
-        productId : "",
-        quantity : 0,
-      }
+      
     ],
   };
 
