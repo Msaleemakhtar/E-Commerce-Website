@@ -3,7 +3,7 @@ import { NavbarItems, NavbarArray } from "@/components/utils/NavbarData";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { BsCart2 } from "react-icons/bs";
+
 import { BiSearch } from "react-icons/bi";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import { useState } from "react";
 import DropDown from "./subNavBar/DropDown";
 import Expand from "./subNavBar/Expand";
 import { useRouter } from "next/navigation";
+import CartState from "./subNavBar/CartState";
 
 
 const Navbar = () => {
@@ -96,12 +97,17 @@ const Navbar = () => {
           
           {/* *****Cart*** */}
 
-          <div className="flex-shrink-0 relative w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center">
+          <Link href={"/cart"}>
+
+          <CartState/>
+          </Link>
+
+          {/* <div className="flex-shrink-0 relative w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center">
             <div className="absolute bg-red-400 text-sm top-1 right-0 w-4 h-4 rounded-full flex items-center justify-center ">
-              {cartItemNumber}{" "}
+              {cartItemNumber}
             </div>
             <BsCart2 size={24} />
-          </div>
+          </div> */}
         </div>
 
         {/* *****hamberg and close icon on Mobile View*** */}
