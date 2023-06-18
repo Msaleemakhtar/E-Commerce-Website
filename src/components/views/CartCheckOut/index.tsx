@@ -38,7 +38,7 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
           setShowCartData(data)
     }
         
-    }, [])
+    })
   
     return(
          <div className="py-10 px-4 md:px-10">
