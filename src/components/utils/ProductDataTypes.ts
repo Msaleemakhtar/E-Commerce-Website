@@ -16,6 +16,7 @@ export interface imagesType {
 
 
 export interface oneProductType {
+    productId: any
     slug: any,
     quantity: number,
     _rev: string,

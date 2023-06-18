@@ -8,7 +8,7 @@ export const cartContext = createContext<any>(null);
 const ContextWrapper = ({ children }: { children: ReactNode }) => {
   const initialValue = {
     cart: [
-      
+   
     ],
   };
 
@@ -31,7 +31,7 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("cart", JSON.stringify(state.cart)) 
   },[state.cart])
 
-  console.log("this is state", state.cart)
+ 
   return (   
     <cartContext.Provider value={{ state, dispatch }}>
       {children}

@@ -17,9 +17,9 @@ async function getData (){
 const Cart = async () => {
     let AllData = await getData();
   return (
-    <ContextWrapper>
+   
   <CartCheckOut cartData = {AllData.result}/>
-    </ContextWrapper>
+  
   )
 }
 
