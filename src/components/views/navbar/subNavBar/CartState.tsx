@@ -12,7 +12,7 @@ const CartState = () => {
 
 const[Quantity, setQuantity]= useState(0);
 
-const isBrowser = () => typeof window !== undefined;
+//const isBrowser = () => typeof window !== undefined;
 
 useEffect(()=>{
 let storageData = localStorage.getItem("cart") as string;
@@ -21,7 +21,7 @@ setQuantity(JSON.parse(storageData).length)
 
 
 
-if(isBrowser()){
+
    return (
     
   <div className="flex-shrink-0 relative w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center">
@@ -30,7 +30,7 @@ if(isBrowser()){
     </div>
     <BsCart2 size={24} />
   </div>
- )}
+   )
 }
  
 

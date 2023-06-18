@@ -10,8 +10,8 @@ import { useState } from "react";
 import DropDown from "./subNavBar/DropDown";
 import Expand from "./subNavBar/Expand";
 import { useRouter } from "next/navigation";
-import CartState from "./subNavBar/CartState";
 import ContextWrapper from "@/global/context";
+import CartState from "./subNavBar/CartState";
 
 
 const Navbar = () => {
@@ -20,7 +20,7 @@ const Navbar = () => {
   const[searchQuery, setSearchQuery]= useState ("") 
 
 
-  const searchHandle = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const searchHandle = (e:any) => {
     if (e.key === 'Enter' && e.keyCode === 13 && searchQuery.trim() !== '') {
       Router.push(`/search/${searchQuery}`);
     }
@@ -56,7 +56,7 @@ const Navbar = () => {
                     size={15}
                   />
                 ) : (
-                  ""
+                 "" 
                 )}
 
                 {item.isDropDown && (
@@ -95,8 +95,9 @@ const Navbar = () => {
             
             />
           </div>
-          
+         
           {/* *****Cart*** */}
+           
 
           <Link href={"/cart"}>
 
