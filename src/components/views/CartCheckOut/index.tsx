@@ -112,7 +112,7 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
                  
                     className="text-white bg-gray-900 border border-gray-500 px-4 py-2 w-full">
                    
-                        "Process to Checkout"
+                        Process to Checkout
                  
                 </button>
             </div>
