@@ -1,16 +1,19 @@
 
 "use client"
 
-import { cartContext } from "@/global/context"
-import { useContext, useEffect, useState } from "react"
+
+import {useEffect, useState } from "react"
 import { BsCart2 } from "react-icons/bs"
 
 
 
 
 const CartState = () => {
+
 const[Quantity, setQuantity]= useState(0);
+
 const isBrowser = () => typeof window !== undefined;
+
 useEffect(()=>{
 let storageData = localStorage.getItem("cart") as string;
 setQuantity(JSON.parse(storageData).length)
