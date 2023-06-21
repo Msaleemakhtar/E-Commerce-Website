@@ -8,6 +8,8 @@ import { GoogleAuthProvider,
    onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, 
    signInWithPopup, signOut, updateProfile 
   } from "firebase/auth";
+import { useRouter } from "next/navigation";
+  
 
 interface indexError{
   [key: string]: string
@@ -17,9 +19,14 @@ interface indexError{
 export const cartContext = createContext<any>(null);
 
 const ContextWrapper = ({ children }: { children: ReactNode }) => {
+  const router = useRouter()
   const[errorsViauserCredential, setErrorsViauserCredential]= useState<indexError | "">("");
  const [userData, setuserData]= useState<any>();
  const[loading, setLoading]= useState(false);
+ const [errorsOfFirebase, setErrorsOfFirebase] = useState({
+  key: "",
+  errorMessage: "",
+});
  
  
  
@@ -75,7 +82,7 @@ let Provider = new GoogleAuthProvider()
 
 function SignUpViaGoogle(){
   setLoading(true)
- return  signInWithPopup(auth, Provider).then((userData)=>{
+ return  signInWithPopup(auth, Provider).then((userData:any)=>{
     if(userData){
       setuserData({
 
@@ -84,7 +91,8 @@ function SignUpViaGoogle(){
         uuid:userData.user.uid,
         photoUrl:userData.user.photoURL,
      
-      })
+      });
+      router.push("/")
     }
     setLoading(false)
   })
@@ -168,7 +176,9 @@ function updateUserNamePhoto(userName:string, photoURL?:string) {
 }
  
   return (   
-    <cartContext.Provider value={{ state, dispatch, userData, signUpUser,signInUser, SignUpViaGoogle, loading, LogOut, sendEmailVerificationCode, updateUserNamePhoto }}>
+    <cartContext.Provider value={{ state, dispatch,
+     userData, signUpUser,signInUser, SignUpViaGoogle, 
+     loading, LogOut, sendEmailVerificationCode, updateUserNamePhoto, errorsOfFirebase }}>
       {children}
     </cartContext.Provider>
   );

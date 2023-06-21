@@ -41,9 +41,9 @@ const SubComp = () => {
               alt={userData.displayName}
             />
           ) : userData.displayName ? (
-            <p className="text-sm">{userData.displayName.slice(0, 1)}</p>
+            <p className="text-sm text-blue-950">{userData.displayName.slice(0, 1)}</p>
           ) : (
-            <p className="text-sm">N</p>
+            <p className="text-sm text-blue-950">N</p>
           )}
         </div>
       ) : (

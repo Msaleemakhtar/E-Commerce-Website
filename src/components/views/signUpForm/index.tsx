@@ -19,16 +19,16 @@ const notificationError = (title: string) => {
 };
 
 const  SignUpForm = () => {
-    let { errorsOfFirebase, signUpUser, userData, signUpViaGoogle, loading, sendEmailVerificationCode } = useContext(cartContext);
+    let { errorsOfFirebase, signUpUser, userData, SignUpViaGoogle, loading, sendEmailVerificationCode } = useContext(cartContext);
 
-    // useEffect(() => {
-    //     if (userData) {
-    //         window.location.href = "/"
-    //     }
-    //     if (errorsOfFirebase.errorMessage.length > 0) {
-    //         notificationError(errorsOfFirebase.errorMessage)
-    //     };
-    // }, [userData, errorsOfFirebase]);
+    useEffect(() => {
+        if (userData) {
+            window.location.href = "/"
+        }
+        if (errorsOfFirebase.errorMessage.length > 0) {
+            notificationError(errorsOfFirebase.errorMessage)
+        };
+    }, [userData, errorsOfFirebase]);
 
 
 
@@ -85,7 +85,7 @@ const  SignUpForm = () => {
 
     // signup via Google
     function handleSignupWithGoogle() {
-        signUpViaGoogle();
+        SignUpViaGoogle();
     }
 
     return (
