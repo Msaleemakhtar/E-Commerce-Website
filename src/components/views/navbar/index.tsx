@@ -33,7 +33,7 @@ const Navbar = () => {
   return (
 
     <ContextWrapper>
-    <div className="sticky tp-0 z-50 bg-white">
+    <div className="sticky tp-0 z-30 bg-white">
       <div className=" py-5 flex items-center justify-between space-x-12">
         {/* *****Logo*** */}
 
