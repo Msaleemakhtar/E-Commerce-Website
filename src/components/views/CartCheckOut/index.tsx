@@ -1,10 +1,11 @@
 "use client"
 import {oneProductType} from "@/components/utils/ProductDataTypes"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { client } from "../../../../sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 import Image from "next/image"
+import { cartContext } from "@/global/context";
 
 const builder = imageUrlBuilder(client);
 
@@ -21,15 +22,25 @@ function urlFor(source: any) {
 const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
     const[showCartData, setShowCartData] = useState<any>()
 
-      
+    const {cartArray, userData, dispatch }=useContext( cartContext)
+
+    function handleRemove(product_id: string) {
+        if (userData) {
+            let user_id = userData.uuid;
+            dispatch("removeFromCart", { product_id, user_id });
+        }
+    }
+
+
+
+    
     useEffect(()=>{
-        let storageData:any = localStorage.getItem("cart") as string;
-        storageData = JSON.parse(storageData)
-    if( storageData){
+        
+    if(cartArray){
         let data = cartData.filter((item:oneProductType)=>{
-            for(let index  = 0; index <storageData.length; index++){
-                const element = storageData[index]
-                if(element.productId === item._id){
+            for(let index  = 0; index <cartArray.length; index++){
+                const element = cartArray[index]
+                if(element.product_id=== item._id && element.user_id === userData.uuid){
                     return true
                 }
             }
@@ -63,7 +74,7 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
                             <div className="space-y-1 md:space-y-3 w-full">
                                 <div className="flex justify-between">
                                     <h2 className="md:text-2xl font-light text-gray-700">{item.productName}</h2>
-                                    <div >
+                                    <div onClick={() => handleRemove(item._id)}>
                                         <RiDeleteBin6Line size={28} />
                                     </div>
                                 </div>

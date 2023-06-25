@@ -1,7 +1,6 @@
 "use client";
 
-
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { FC, useContext } from "react";
 import {
   oneProductType,
@@ -12,9 +11,7 @@ import { client } from "../../../../sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 import { useState } from "react";
 import { BsCart2 } from "react-icons/bs";
-import { cartContext } from "@/global/context";
-
-
+import { cartContext, } from "@/global/context";
 
 const builder = imageUrlBuilder(client);
 
@@ -22,55 +19,59 @@ function urlFor(source: any) {
   return builder.image(source);
 }
 
-
-
-
 const ProductDetail: FC<{ item: oneProductType }> = ({ item }) => {
-let {dispatch} =  useContext(cartContext)
+  let { dispatch, userData, cartArray } = useContext(cartContext);
   const [previewImage, setPreviewImage] = useState<string>(item.image[0]._key);
-  const [Quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
-    setQuantity(Quantity + 1);
+    setQuantity(quantity + 1);
   };
 
   const decrementQuantity = () => {
-    if (Quantity !== 0) {
-      setQuantity(Quantity - 1);
+    if (quantity !== 0) {
+      setQuantity(quantity - 1);
     }
   };
 
 
-function cartHandle(){
+  
 
-  dispatch({
-    payload:"addToCart",
-    data:{
-      productId: item._id,
-      quantity:Quantity,
-    }
-  })
-  notification(item.productName)
+  function cartHandle() {
+    let isExsits = cartArray.some((elem: any) => elem.product_id === item._id);
+    console.log(isExsits)
+if(userData) {
+  console.log(userData)
+   let dataToAddInCart  =   {
+        product_id: item._id,
+        quantity: quantity,
+        price: item.price,
+        user_id: userData.uuid,
+      }
+      if(!isExsits) {
+         dispatch("addToCart", dataToAddInCart);
+      }else{
+        dispatch("addToCart", dataToAddInCart);
+      }
+   
+    notification(item.productName);
+  }
+
 }
-const notification = (title:string) => toast.success(`${Quantity}${title} added to Cart`,{
-
-  duration: 4000,
-  position: 'top-center',
-  className: 'border-2 border-indigo-200 border-t-indigo-500',
-
-});
+   
 
 
 
-
-
-
-
-
+  const notification = (title: string) =>
+    toast.success(`${quantity}${title} added to Cart`, {
+      duration: 4000,
+      position: "top-center",
+      className: "border-2 border-indigo-200 border-t-indigo-500",
+    });
 
   return (
     <div>
-      <Toaster/>
+      <Toaster />
       <div className=" flex flex-col lg:flex-row items-center justify-center gap-6 py-7">
         {/* imges */}
         <div className="flex gap-4 md:gap-8">
@@ -146,7 +147,7 @@ const notification = (title:string) => toast.success(`${Quantity}${title} added 
               >
                 -
               </div>
-              <span>{Quantity}</span>
+              <span>{quantity}</span>
               <div
                 onClick={incrementQuantity}
                 className=" select-none bg-gray-100 w-8 h-8 rounded-full flex justify-center items-center font-bold"
@@ -158,8 +159,11 @@ const notification = (title:string) => toast.success(`${Quantity}${title} added 
 
           {/* add to cart */}
 
-          <div  className=" flex items-center gap-4">
-            <button onClick  = {()=>cartHandle()} className="flex items-center bg-gray-900 rounded-sm px-3 py-3 text-white ">
+          <div className=" flex items-center gap-4">
+            <button
+              onClick={() => cartHandle()}
+              className="flex items-center bg-gray-900 rounded-sm px-3 py-3 text-white "
+            >
               <BsCart2 size={23} />
               &nbsp; &nbsp; Add To Cart
             </button>

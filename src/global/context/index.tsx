@@ -9,6 +9,8 @@ import { GoogleAuthProvider,
    signInWithPopup, signOut, updateProfile 
   } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import BASE_PATH_FORAPI from '@/components/shared/BasePath';
+
   
 
 interface indexError{
@@ -23,57 +25,91 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
   const[errorsViauserCredential, setErrorsViauserCredential]= useState<indexError | "">("");
  const [userData, setuserData]= useState<any>();
  const[loading, setLoading]= useState(false);
+ const[cartArray, setCartArray]= useState<any>([])
+ 
  const [errorsOfFirebase, setErrorsOfFirebase] = useState({
   key: "",
   errorMessage: "",
 });
- 
- 
- 
- const user = auth.currentUser;
+const [quantity, setQuantity] = useState(0);
 
- useEffect(()=>{
-  onAuthStateChanged(auth, (user:any)=>{
+useEffect(() => {
+  if (cartArray.length !== 0) {
+      setQuantity(cartArray.length);
+  }
+}, [cartArray])
+
+async function fetchData() {
+  if (userData) {
+      let res = await fetch(`/api/cart?user_id=${userData.uuid}`);
+      if (!res.ok) {
+          throw new Error("Failed to Fetch")
+      }
+      let dataToreturn = await res.json();
+      await setCartArray((prev: any) => dataToreturn.cartData);
+      router.refresh();
+      if (dataToreturn) {
+          return true
+      }
+  }
+}
+
+useEffect(() => {
+  fetchData();
+}, [userData]);
+
+
    
-    if(user){
-      setuserData({
-        displayName: user.displayName,
-        email:user.email,
-        uuid:user.uid,
-        photoUrl:user.photoUrl,
-        emailVerified:user.emailVerified
-
-      })
-    }else{
-      setuserData(null);
+   async function dispatch(payload: string, data: any) {
+    if (payload === "addToCart") {
+        console.log("func running of add to cart");
+        await fetch(`/api/cart`, {
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+    } else if (payload === "removeFromCart") {
+        let dataa = await fetch(`/api/cart?product_id=${data.product_id}&user_id=${data.user_id}`, {
+            method: "DELETE",
+        });
+        let NotData = await dataa.json();
+    } else if (payload === "updateCart") {
+        setLoading(true);
+        let dataa = await fetch(`/api/cart`, {
+            method: "PUT",
+            body: JSON.stringify(data)
+        });
+        let NotData = await dataa.json();
+        setLoading(false);
     }
-  });
- },[])
- 
- // Cartstate data 
- 
-  const initialValue = {
-    cart: [],
-  };
-
-  const [state, dispatch] = useReducer(cartReducer, initialValue);
+    // let resp = await fetchCartData();
+    // if (resp) {
+    //     return "sucess"
+    // } else {
+    //     return "unSucess"
+    // }
+};
 
 
-  
-  
-  useEffect(()=>{
-    let cart = localStorage.getItem("cart") as string;
-    if(cart === null){
-      localStorage.setItem("cart", JSON.stringify(state.cart));
-    }else{
-      initialValue.cart = JSON.parse(cart)
 
-    }})
-
+  const user = auth.currentUser;
 
   useEffect(()=>{
-    localStorage.setItem("cart", JSON.stringify(state.cart)) 
-  },[state.cart])
+   onAuthStateChanged(auth, (user:any)=>{
+    
+     if(user){
+       setuserData({
+         displayName: user.displayName,
+         email:user.email,
+         uuid:user.uid,
+         photoUrl:user.photoUrl,
+         emailVerified:user.emailVerified
+ 
+       })
+     }else{
+       setuserData(null);
+     }
+   });
+  },[])
 
 // SignUp via Google
 
@@ -176,7 +212,7 @@ function updateUserNamePhoto(userName:string, photoURL?:string) {
 }
  
   return (   
-    <cartContext.Provider value={{ state, dispatch,
+    <cartContext.Provider value={{ cartArray, dispatch, quantity,
      userData, signUpUser,signInUser, SignUpViaGoogle, 
      loading, LogOut, sendEmailVerificationCode, updateUserNamePhoto, errorsOfFirebase }}>
       {children}
