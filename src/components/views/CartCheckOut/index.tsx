@@ -74,7 +74,7 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
                             <div className="space-y-1 md:space-y-3 w-full">
                                 <div className="flex justify-between">
                                     <h2 className="md:text-2xl font-light text-gray-700">{item.productName}</h2>
-                                    <div cursor-pointer onClick={() => handleRemove(item._id)}>
+                                    <div className="cursor-pointer" onClick={() => handleRemove(item._id)}>
                                         <RiDeleteBin6Line size={28} />
                                     </div>
                                 </div>
