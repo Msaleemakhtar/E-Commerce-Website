@@ -31,15 +31,15 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
   key: "",
   errorMessage: "",
 });
+ const [quantity, setQuantity] = useState(0);
 
 
 
-const [quantity, setQuantity] = useState(0);
-console.log("quantity",quantity)
 useEffect(() => {
-  console.log("cartArray",cartArray)
+
   if (cartArray.length > 0) {
       setQuantity(cartArray.length);
+
   }
 }, [cartArray])
 
@@ -50,7 +50,7 @@ async function fetchData() {
           throw new Error("Failed to Fetch")
       }
       let dataToreturn = await res.json();
-      console.log("datatoreturn", dataToreturn)
+  
       await setCartArray((prev: any) => dataToreturn.cartData);
       router.refresh();
       if (dataToreturn) {
@@ -86,12 +86,12 @@ useEffect(() => {
         let NotData = await dataa.json();
         setLoading(false);
     }
-    // let resp = await fetchCartData();
-    // if (resp) {
-    //     return "sucess"
-    // } else {
-    //     return "unSucess"
-    // }
+    let resp = await fetchData();
+    if (resp) {
+        return "sucess"
+    } else {
+        return "unSucess"
+    }
 };
 
 

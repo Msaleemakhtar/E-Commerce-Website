@@ -11,8 +11,9 @@ import { BsCart2 } from "react-icons/bs"
 
 const CartState = () => {
 
-const{quantity} = useContext(cartContext)
 
+const{quantity} = useContext(cartContext)
+ 
 
 
 
