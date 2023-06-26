@@ -51,7 +51,7 @@ if(userData) {
       if(!isExsits) {
          dispatch("addToCart", dataToAddInCart);
       }else{
-        dispatch("addToCart", dataToAddInCart);
+        dispatch("updateCart", dataToAddInCart);
       }
    
     notification(item.productName);

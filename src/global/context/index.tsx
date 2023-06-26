@@ -31,10 +31,14 @@ const ContextWrapper = ({ children }: { children: ReactNode }) => {
   key: "",
   errorMessage: "",
 });
-const [quantity, setQuantity] = useState(0);
 
+
+
+const [quantity, setQuantity] = useState(0);
+console.log("quantity",quantity)
 useEffect(() => {
-  if (cartArray.length !== 0) {
+  console.log("cartArray",cartArray)
+  if (cartArray.length > 0) {
       setQuantity(cartArray.length);
   }
 }, [cartArray])
@@ -46,6 +50,7 @@ async function fetchData() {
           throw new Error("Failed to Fetch")
       }
       let dataToreturn = await res.json();
+      console.log("datatoreturn", dataToreturn)
       await setCartArray((prev: any) => dataToreturn.cartData);
       router.refresh();
       if (dataToreturn) {
@@ -118,7 +123,7 @@ let Provider = new GoogleAuthProvider()
 
 function SignUpViaGoogle(){
   setLoading(true)
- return  signInWithPopup(auth, Provider).then((userData:any)=>{
+  signInWithPopup(auth, Provider).then((userData:any)=>{
     if(userData){
       setuserData({
 
@@ -139,33 +144,38 @@ function SignUpViaGoogle(){
 
 // SignUp via Email & Password
 
-function signUpUser(email:string, password:string){
+function signUpUser(email: string, password: string) {
   setLoading(true);
-  return createUserWithEmailAndPassword(auth, email, password).then((res:any)=>{
-  setLoading(false);
-  setErrorsViauserCredential({
-    "error Messaeg" : "Eroor occureed while signup via email & password"
-  })
-  }).catch((res:any)=>{
-    setLoading(false);
+  createUserWithEmailAndPassword(auth, email, password).then((res: any) => {
+      setLoading(false);
+      router.push("/");
+  }).catch((res: any) => {
+      let error = res.code.split("/")
+      error = error[error.length - 1];
+      setErrorsOfFirebase({
+          key: "signup",
+          errorMessage: error
+      })
+      setLoading(false);
   });
   setLoading(false);
-
-}
+};
 
 // SignIn via Email & Password
-function signInUser(email:string, password:string){
-  return  signInWithEmailAndPassword(auth, email, password).then((res:any)=>{
-    setLoading(false);
-    setErrorsViauserCredential({
-      "error Messaeg" : "Eroor occureed while signin via email & password"
-    })
-    }).catch((res:any)=>{
+function signInUser(email: string, password: string) {
+  setLoading(true);
+  signInWithEmailAndPassword(auth, email, password).then((res: any) => {
       setLoading(false);
-    });
-    setLoading(false);
-  
-  }
+  }).catch((res: any) => {
+      let error = res.code.split("/")
+      error = error[error.length - 1];
+      setErrorsOfFirebase({
+          key: "signin",
+          errorMessage: error
+      })
+  });
+  setLoading(false);
+}
 
 // LogOut 
 

@@ -6,7 +6,7 @@ import { client } from "../../../../sanity/lib/client";
 import imageUrlBuilder from "@sanity/image-url";
 import Image from "next/image"
 import { cartContext } from "@/global/context";
-
+import toast, { Toaster } from "react-hot-toast";
 const builder = imageUrlBuilder(client);
 
 function urlFor(source: any) {
@@ -21,9 +21,10 @@ function urlFor(source: any) {
 
 const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
     const[showCartData, setShowCartData] = useState<any>()
+    const[totalPrice, setTotalprice] = useState(0)
+    const {cartArray, userData, dispatch }=useContext( cartContext);
 
-    const {cartArray, userData, dispatch }=useContext( cartContext)
-
+ 
     function handleRemove(product_id: string) {
         if (userData) {
             let user_id = userData.uuid;
@@ -38,6 +39,7 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
         
     if(cartArray){
         let data = cartData.filter((item:oneProductType)=>{
+            
             for(let index  = 0; index <cartArray.length; index++){
                 const element = cartArray[index]
                 if(element.product_id=== item._id && element.user_id === userData.uuid){
@@ -45,15 +47,72 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
                 }
             }
          
-        })
-          setShowCartData(data)
-    }
+        });
+
         
-    }, [cartData])
-  
+    
+          let updatedData = data.map((Subitem:oneProductType)=>{
+          
+            for(let index  = 0; index <cartArray.length; index++){
+                const element = cartArray[index]
+                if(element.product_id === Subitem._id){
+                    return {
+                       ...Subitem,
+                       quantity:  element.quantity,
+                    };
+                }
+            }
+         
+        });
+
+        
+          setShowCartData(updatedData)
+         
+    }    
+
+    }, [cartArray])
+
+
+
+    function handleInc(product_id:string, price:any) {
+        let Cartquantity:number  = 0;
+        cartArray.forEach((elem:any)=>{
+         if(elem.product_id === product_id ){
+          Cartquantity  == elem.quantity
+         }
+        })
+    }
+
+    function handleDec(product_id:string, price:any) {
+        let Cartquantity:number  = 0;
+        cartArray.forEach((elem:any)=>{
+         if(elem.product_id === product_id ){
+          Cartquantity  == elem.quantity
+         }
+        })
+        if(Cartquantity -1 <= 0){
+            notification("quantity cannot be in Minus")
+        }else{
+
+            dispatch ("updateCart",{
+                product_id: product_id,
+                user_id:userData.uuid,
+                quantity: Cartquantity - 1 ,
+                price : price,
+
+            })
+            notification("Decrement by One")
+        }
+    };
+    const notification = (title: string) =>
+    toast.success(`${title} `, {
+      duration: 4000,
+      position: "top-center",
+      className: "border-2 border-indigo-200 border-t-indigo-500",
+    });
     return(
          <div className="py-10 px-4 md:px-10">
-     
+           <Toaster />
 
         {/* first */}
         <div className="py-6">
@@ -85,13 +144,13 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
                                     <p className="font-semibold md:text-lg">{"$"}{item.price}</p>
                                     <div className="flex gap-2  items-center text-lg">
                                         <button
-                                          
+                                          onClick={()=>handleDec(item._id, item.price)}
                                             className="select-none cursor-pointer flex justify-center items-center w-8 h-8 rounded-full bg-gray-200">
                                             -
                                         </button>
-                                        <p>5</p>
+                                        <p>{item.quantity}</p>
                                         <button
-                                       
+                                         onClick={()=>handleInc(item._id, item.price)}
                                             className="border select-none cursor-pointer flex justify-center items-center w-8 h-8 rounded-full  border-gray-800"
                                         >
                                             +
@@ -113,11 +172,11 @@ const CartCheckOut =  ({cartData}:{cartData:Array<oneProductType>})=>{
                 <h6 className="font-semibold text-xl">Order Summary</h6>
                 <div className="flex justify-between">
                     <p className="text-lg font-light">Quantity:</p>
-                    <p>{"cartArray.length"} Products</p>
+                    <p>{cartArray.length} Products</p>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-lg font-light">Subtotal:</p>
-                    <p>${"Price"}</p>
+                    <p>${totalPrice}</p>
                 </div>
                 <button
                  
