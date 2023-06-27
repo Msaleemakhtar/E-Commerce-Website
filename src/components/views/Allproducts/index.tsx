@@ -10,8 +10,8 @@ interface propsType {
 }
 
 export default class AllProductsCompo extends Component<{ ProdutcData: propsType }> {
-    start: number = 10;
-    end: number = 20;
+    start: number = 5;
+    end: number = 10;
     state: { items: Array<oneProductType>, hasMore: boolean } = {
         items: [...this.props.ProdutcData.productArray],
         hasMore: true,
@@ -35,8 +35,8 @@ export default class AllProductsCompo extends Component<{ ProdutcData: propsType
                 hasMore: false
             })
         }
-        this.start = this.start + 10;
-        this.end = this.end + 10;
+        this.start = this.start + 5;
+        this.end = this.end + 5;
     }
     render() {
         return (
