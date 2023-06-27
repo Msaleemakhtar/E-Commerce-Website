@@ -47,7 +47,7 @@ export default class AllProductsCompo extends Component<{ ProdutcData: propsType
                 loader={<h4>Loading...</h4>}
                 endMessage={
                     <p style={{ textAlign: 'center' }}>
-                        <b>Yay! You have seen it all</b>
+                        <b>hay! You have seen it all</b>
                     </p>
                 }
                 className="content-center justify-center grid grid-cols-2 md:grid-cols-3 py-10 lg:grid-cols-4 gap-4"
