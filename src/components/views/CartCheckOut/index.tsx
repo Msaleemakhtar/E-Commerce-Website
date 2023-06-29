@@ -19,7 +19,7 @@ const CartCheckOut = ({ cartData }: { cartData: Array<oneProductType> }) => {
     const router = useRouter()
   const [showCartData, setShowCartData] = useState<any>();
   const [totalPrice, setTotalprice] = useState(0);
-  const { cartArray, userData, dispatch } = useContext(cartContext);
+  const { cartArray, userData, dispatch,loading, setLoading } = useContext(cartContext);
 
   
 
@@ -137,6 +137,27 @@ useEffect(() =>{
       className: "border-2 border-indigo-200 border-t-indigo-500",
     });
 
+
+    // checkout through stripeApi
+
+ async function handleProcessCheckOut(){
+  setLoading(true)
+  
+  let dataToSend = await fetch(`/api/cart_session`, {
+    method:"POST",
+    body:JSON.stringify(showCartData)
+  }) 
+  
+  if(dataToSend){
+    let {link}  = await dataToSend.json();
+ 
+    window.location.href = link
+  }
+setLoading(false)
+}
+
+
+
   return (
     <div className="py-10 px-4 md:px-10">
       <Toaster />
@@ -219,8 +240,9 @@ useEffect(() =>{
             <p className="text-lg font-light">Subtotal:</p>
             <p>${totalPrice}</p>
           </div>
-          <button className="text-white bg-gray-900 border border-gray-500 px-4 py-2 w-full">
-            Process to Checkout
+          <button onClick = {handleProcessCheckOut} className="text-white bg-gray-900 border border-gray-500 px-4 py-2 w-full">
+          {loading? "loading... "  : "Process to Checkout"}
+            
           </button>
         </div>
       </div>

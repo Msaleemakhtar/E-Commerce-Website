@@ -224,7 +224,7 @@ function updateUserNamePhoto(userName:string, photoURL?:string) {
   return (   
     <cartContext.Provider value={{ cartArray, dispatch, quantity,
      userData, signUpUser,signInUser, SignUpViaGoogle, 
-     loading, LogOut, sendEmailVerificationCode, updateUserNamePhoto, errorsOfFirebase }}>
+     loading, setLoading, LogOut, sendEmailVerificationCode, updateUserNamePhoto, errorsOfFirebase }}>
       {children}
     </cartContext.Provider>
   );
