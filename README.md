@@ -13,7 +13,8 @@ This project is a full stack e-commerce website built with Next js. I created th
 - [react-hot-toast](https://react-hot-toast.com/) - react library that adds beautiful notifications to our react application. 
 - [react icons](https://react-icons.github.io/react-icons/) - JS library to add icons
 - [Postgress](https://www.postgresql.org/)- Vercel Postgres for efficient order management.
-- [Drizzle ORM](https://github.com/drizzle-team/drizzle-orm) -  for database operations
+- [Drizzle ORM](https://github.com/drizzle-team/drizzle-orm) -  for database operations.
+- [Firebase](https://firebase.google.com/docs/auth) -  for user management
 
 
 ## Author
