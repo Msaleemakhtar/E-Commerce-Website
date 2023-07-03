@@ -3,42 +3,17 @@ This project is a full stack e-commerce website built with Next js. I created th
 
 
 
-
-
-## My process
-
 ### Built with
 
-- 
+
+- [Tailwind CSS](https://tailwindcss.com/) - TailwindCSS for styling purposes
 - [Next JS](https://nextjs.org/) - React Framework for Production
 - [Sanity](https://www.sanity.io/) - Sanity is a customizable solution that treats content as data to power digital business.
 - [Stripe](https://stripe.com/en-gb-us) - APIs to power online payment processing for e-commerce
 - [react-hot-toast](https://react-hot-toast.com/) - react library that adds beautiful notifications to our react application. 
 - [react icons](https://react-icons.github.io/react-icons/) - JS library to add icons
-
-
-### What I learned
-
-
-```
-By setting position to absolute and z-index to -1 (or lower than any other z-index of other elements).
-z-index is a CSS property that defines the order of overlapping HTML elements. Elements with a higher index will be placed on top of elements with a lower index
-![adding text as background](./src/assets/middle-section.png)
-
-I also learned how to connect stripe as payment gate for e-commerce. Full code for connecting to stripe in /pages/api/stripe.js
-![payment with stripe](./src/assets/payment.png)
-
-The confetti effect is implemented on the payment success page after the user successfully checkouts their cart
-![payment success](./src/assets/success-pay.png)
-
-### Continued development
-The development of this project can be continued by adding a search filter functionality, an e-commerce newsletter, activate the slider function for product section in homepage. In the near future, I'm going to explore react js search filters and maybe add that functionality myself.
-
-### Useful resources
-- [UI/UX Design Resources](https://ui8.net/) - This website provide many UI/UX design, some are even free.
-- [Tutorial Modern Full Stack ECommerce React Application with Stripe by JavaScript Mastery](https://www.youtube.com/watch?v=4mOkFXyxfsU&t=10459s) - This youtube tutorial really helps in understanding Next js and the use of sanity and stripe for e-commerce
-- [Swiper React Components](https://swiperjs.com/react#styles)
-- [Customize Prev/Next Button of Swiper Arrows](https://www.timo-ernst.net/blog/2020/09/12/arrows-in-react-swiper-js-how-to-customize-prev-next-button/)
+- [Postgress](https://www.postgresql.org/)- Vercel Postgres for efficient order management.
+- [Drizzle ORM](https://github.com/drizzle-team/drizzle-orm) -  for database operations
 
 
 ## Author
@@ -46,16 +21,3 @@ The development of this project can be continued by adding a search filter funct
 - Github -(https://github.com/Msalaeemakhtar/)
 
 
-
-## Acknowledgments
-
-A HUGE Thanks to Javascript Mastery youtube channel which really helps me in learning about web development. I recommend this channel to everyone who wants to learn about web development and javascript
-
-
-## Getting Started
-
-To run the development server:
-
-```bash
-npm run dev
-```
